@@ -1,0 +1,1584 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model sys_role {
+  id          BigInt    @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  sort        Int?
+  del_flag    Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  status      Boolean?  @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  type        Int?
+  company_id  String?   @db.VarChar(255)
+  creator_id  String?   @db.VarChar(255)
+}
+
+model sys_user {
+  uid             String    @id @db.VarChar(255)
+  username        String?   @db.VarChar(255)
+  password        String?   @db.VarChar(255)
+  salt            String?   @db.VarChar(255)
+  realname        String?   @default("null") @db.VarChar(255)
+  nickname        String?   @db.VarChar(255)
+  mobile          String?   @db.VarChar(255)
+  email           String?   @db.VarChar(255)
+  job             String?   @db.VarChar(255)
+  del_flag        Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time     DateTime? @db.DateTime(0)
+  update_time     DateTime? @db.DateTime(0)
+  sex             String?   @db.Char(10)
+  we_chart        String?   @db.VarChar(255)
+  qq              String?   @db.VarChar(255)
+  micro_blog      String?   @db.VarChar(255)
+  inter_flag      Boolean?  @db.Bit(1)
+  status          Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  avatar          String?   @db.VarChar(255)
+  point           Int?      @default(0)
+  cy_name         String?   @db.VarChar(255)
+  cy_trade        String?   @db.VarChar(255)
+  cy_size         Float?
+  province        String?   @db.VarChar(255)
+  city            String?   @db.VarChar(255)
+  accid           String?   @db.VarChar(255)
+  im_token        String?   @db.VarChar(255)
+  block_flag      Boolean?  @db.Bit(1)
+  menus           String?   @db.LongText
+  main_company_id String?   @db.VarChar(255)
+}
+
+model app_version {
+  id           BigInt    @id
+  version_name String?   @db.VarChar(255)
+  version_code Int?
+  desc         String?   @db.LongText
+  url          String?   @db.VarChar(255)
+  create_time  DateTime? @db.DateTime(0)
+  type         Int?
+}
+
+model attr_project {
+  id                BigInt    @id
+  attr_project_name String?   @db.VarChar(255)
+  delete_flg        Boolean?  @db.Bit(1)
+  create_time       DateTime? @db.DateTime(0)
+  update_time       DateTime? @db.DateTime(0)
+}
+
+model bak_data_perm {
+  id          BigInt    @id
+  name        String?   @db.VarChar(255)
+  code        String?   @db.VarChar(255)
+  value       String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model bak_home_report {
+  id                  BigInt    @id
+  name                String?   @db.VarChar(255)
+  description         String?   @db.VarChar(255)
+  sort                Int?
+  report_id           BigInt?
+  img_url             String?   @db.VarChar(255)
+  create_time         DateTime? @db.DateTime(0)
+  update_time         DateTime? @db.DateTime(0)
+  report_id_array_str String?   @db.VarChar(255)
+}
+
+model bak_home_schedule {
+  id          BigInt    @id
+  date        DateTime? @db.DateTime(0)
+  content     String?   @db.VarChar(255)
+  plan        String?   @db.VarChar(255)
+  uid         String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+}
+
+model bak_home_table {
+  id          BigInt    @id
+  table_name  String?   @db.VarChar(255)
+  table_icon  String?   @db.VarChar(255)
+  type        String?   @db.VarChar(255)
+  f001        String?   @db.VarChar(255)
+  f002        String?   @db.VarChar(255)
+  f003        String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  sort        Int?
+}
+
+model bak_home_table_data {
+  id          BigInt    @id
+  type        String?   @db.VarChar(255)
+  f001        String?   @db.VarChar(255)
+  f002        String?   @db.VarChar(255)
+  f003        String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  report_url  String?   @db.VarChar(255)
+  report_name String?   @db.VarChar(255)
+}
+
+model bak_sys_all_navi_data {
+  id          BigInt    @id @default(autoincrement())
+  sys_id      BigInt?
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  type        Int?
+  icon        String?   @db.VarChar(255)
+  jump        String?   @db.VarChar(255)
+  permission  String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_perm_all {
+  id                           BigInt    @id @default(autoincrement())
+  role_id                      BigInt?
+  dept_permission_show         String?   @db.VarChar(2550)
+  dept_permission_str          String?   @db.VarChar(2550)
+  user_permission_show         String?   @db.VarChar(2550)
+  user_permission_str          String?   @db.VarChar(2550)
+  function_permission_show     String?   @db.VarChar(2550)
+  function_permission_str      String?   @db.VarChar(2550)
+  function_permission_menu_str String?   @db.VarChar(2550)
+  base_data_permission_show    String?   @db.VarChar(255)
+  base_data_permission_str     String?   @db.VarChar(255)
+  sys_conf_permission_show     String?   @db.VarChar(255)
+  sys_conf_permission_str      String?   @db.VarChar(255)
+  sql_permission_show          String?   @db.VarChar(255)
+  sql_permission_str           String?   @db.VarChar(255)
+  begin_time                   DateTime? @db.DateTime(0)
+  end_time                     DateTime? @db.DateTime(0)
+  create_time                  DateTime? @db.DateTime(0)
+  update_time                  DateTime? @db.DateTime(0)
+}
+
+model bak_sys_perm_user {
+  id         Int     @id @default(autoincrement())
+  name       String? @db.VarChar(255)
+  type       Int?
+  value      String? @db.VarChar(255)
+  group_type Int?
+}
+
+model bak_sys_report_20200714 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20200716 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20200721 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20200722 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20200727 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20200827 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20200908 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20200914 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20200924 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201009T152913104_5681 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201010T090712384_6802 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201019T150217101_8769 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201019T150952523_5058 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201019T151657328_0081 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201117T192149809_0962 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201118T104527286_5009 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201119T132037974_0466 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201120T103419696_1954 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201210T104652433_7697 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201210T104725506_8194 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201210T104756186_4913 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_report_20201221T150628823_0258 {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model bak_sys_role_data_perm {
+  role_id       BigInt  @id
+  data_perm_str String? @db.Text
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model bak_sys_role_perm {
+  role_id Int
+  perm_id Int?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model bak_sys_user_dept {
+  uid           String  @db.VarChar(255)
+  department_id String? @db.VarChar(255)
+  company_id    String? @db.VarChar(255)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model bak_sys_user_role {
+  uid     String  @db.VarChar(255)
+  role_id BigInt?
+
+  @@ignore
+}
+
+model bak_sys_user_school_history {
+  id          BigInt    @id
+  uid         String?   @db.VarChar(40)
+  school_name String?   @db.VarChar(255)
+  major       String?   @db.VarChar(255)
+  course      String?   @db.VarChar(255)
+  start_time  DateTime? @db.DateTime(0)
+  end_time    DateTime? @db.DateTime(0)
+  now_flag    Boolean?  @db.Bit(1)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model cm_city {
+  city_id     BigInt  @id
+  city_name   String? @db.VarChar(50)
+  zip_code    String? @db.VarChar(50)
+  province_id BigInt?
+}
+
+model cm_cy_trade {
+  id          Int     @id @default(autoincrement())
+  code        String? @db.VarChar(32)
+  value       String? @db.VarChar(255)
+  parent_code String? @db.VarChar(32)
+
+  @@index([code], map: "sctc")
+}
+
+model cm_district {
+  DistrictID   BigInt  @id
+  DistrictName String? @db.VarChar(50)
+  CityID       BigInt?
+}
+
+model cm_province {
+  province_id   BigInt  @id
+  province_name String? @db.VarChar(50)
+}
+
+model dept_invite_apply {
+  id          BigInt    @id
+  company_id  String?   @db.VarChar(255)
+  dept_id     String?   @db.VarChar(255)
+  invitee     String?   @db.VarChar(255)
+  creator     String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  apply_time  DateTime? @db.DateTime(0)
+  status      Int?
+  operator    String?   @db.VarChar(255)
+}
+
+model favorite {
+  id          BigInt    @id @default(autoincrement())
+  name        String?   @db.VarChar(255)
+  user_id     String    @db.VarChar(255)
+  icon        Int?
+  del_flag    Boolean?  @db.Bit(1)
+  parent_id   Int?
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+
+  @@index([user_id], map: "fu")
+}
+
+model favorite_detail {
+  id          BigInt    @id @default(autoincrement())
+  user_id     String?   @db.VarChar(255)
+  type_id     BigInt?
+  type        Int?
+  favorite_id BigInt
+  del_flag    Boolean   @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+
+  @@index([type_id, type], map: "fdtit")
+  @@index([user_id], map: "fdu")
+}
+
+model home_table_data {
+  type        String?   @db.VarChar(255)
+  f001        String?   @db.VarChar(255)
+  f002        String?   @db.VarChar(255)
+  f003        String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  report_url  String?   @db.VarChar(255)
+  report_name String?   @db.VarChar(255)
+  id          Int       @id
+  company_id  String?   @db.VarChar(255)
+  report_id   BigInt?
+}
+
+model im_group {
+  id           BigInt  @id
+  type         Int?
+  associate_id String? @db.VarChar(32)
+  group_id     String? @db.VarChar(32)
+  remark       String? @db.VarChar(255)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model image_count {
+  imageName String? @db.VarChar(255)
+  count     Int?
+
+  @@ignore
+}
+
+model kafka_error_log {
+  id          BigInt    @id
+  topic       String?   @db.VarChar(255)
+  partition   Int?
+  target_id   BigInt?
+  operation   String?   @db.VarChar(255)
+  re_kafka    Int?
+  create_time DateTime? @db.DateTime(0)
+}
+
+model kpi_atom {
+  id            BigInt    @id
+  name_ch       String?   @db.VarChar(255)
+  name_en       String?   @db.VarChar(255)
+  name_abb      String?   @db.VarChar(255)
+  define        String?   @db.VarChar(255)
+  description   String?   @db.VarChar(255)
+  delete_flg    Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time   DateTime? @db.DateTime(0)
+  update_time   DateTime? @db.DateTime(0)
+  common_flg    Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  enterprise_id BigInt?
+  creator_id    String?   @default("0") @db.VarChar(255)
+}
+
+model kpi_attr {
+  id           BigInt    @id
+  attr_project BigInt?
+  name_ch      String?   @db.VarChar(255)
+  name_en      String?   @db.VarChar(255)
+  name_abb     String?   @db.VarChar(255)
+  define       String?   @db.VarChar(255)
+  description  String?   @db.VarChar(255)
+  delete_flg   Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time  DateTime? @db.DateTime(0)
+  update_time  DateTime? @db.DateTime(0)
+  creator_id   String?   @db.VarChar(255)
+}
+
+model kpi_attr_project {
+  id          String    @id @db.VarChar(255)
+  name        String?   @db.VarChar(255)
+  delete_flg  Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  creator_id  String?   @db.VarChar(255)
+}
+
+model kpi_lib {
+  id            BigInt    @id
+  kpi_no        String?   @db.VarChar(255)
+  atom_id       BigInt?
+  delete_flg    Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time   DateTime? @db.DateTime(0)
+  update_time   DateTime? @db.DateTime(0)
+  common_flg    Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  enterprise_id BigInt?
+  creator_id    String?   @default("0") @db.VarChar(255)
+  attr_list     String?   @default("") @db.VarChar(2550)
+  children      String?   @default("") @db.VarChar(2550)
+  formulas      String?   @db.VarChar(255)
+  target_value  String?   @db.VarChar(255)
+  weight        Float?
+  status        Int?      @default(0)
+  bm_value      String?   @db.VarChar(255)
+}
+
+model naotu_dir {
+  id          BigInt    @id
+  uid         String?   @db.VarChar(255)
+  name        String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  delete_flg  Boolean?  @db.Bit(1)
+}
+
+model okr_focus_on_task {
+  id      BigInt  @id
+  task_id BigInt?
+  user_id String? @db.VarChar(255)
+}
+
+model okr_join_apply {
+  id           BigInt    @id
+  type         Int?
+  objective_id BigInt?
+  task_id      BigInt?
+  proposer_id  String?   @db.VarChar(255)
+  status       Int?
+  principal    String?   @db.VarChar(255)
+  create_time  DateTime? @db.DateTime(0)
+  modify_time  DateTime? @db.DateTime(0)
+  remark       String?   @db.VarChar(255)
+  delete_flg   Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+}
+
+model okr_kr {
+  id               BigInt    @id
+  project_id       BigInt?
+  objective_id     BigInt?
+  kr_name          String?   @db.VarChar(255)
+  description      String?   @db.VarChar(255)
+  confidence_index Int?      @default(0)
+  kr_summary       String?   @db.VarChar(255)
+  grade            Decimal?  @default(0.00) @db.Decimal(3, 2)
+  sort             Int?
+  creator          String?   @db.VarChar(255)
+  create_time      DateTime? @db.DateTime(0)
+  modify_time      DateTime? @db.DateTime(0)
+  delete_flg       Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  weight_index     Int?      @default(0)
+  finish_index     Int?      @default(0)
+  principal        String?   @db.VarChar(255)
+  member_ids       String?   @db.VarChar(2550)
+}
+
+model okr_kr_summary {
+  id          BigInt    @id
+  kr_id       BigInt?
+  uid         String?   @db.VarChar(255)
+  kr_summary  String?   @db.VarChar(255)
+  grade       Decimal?  @db.Decimal(3, 2)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  del_flg     Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+}
+
+model okr_like {
+  id        BigInt    @id
+  like_id   String    @db.VarChar(255)
+  type      Int?
+  uid       String?   @db.VarChar(255)
+  like_time DateTime? @db.DateTime(0)
+}
+
+model okr_link {
+  id           BigInt    @id
+  link_id      String    @db.VarChar(255)
+  type         Int?
+  from_user_id String?   @db.VarChar(255)
+  from_user    String?   @db.VarChar(255)
+  to_user_id   String?   @db.VarChar(255)
+  to_user      String?   @db.VarChar(255)
+  delete_flg   Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time  DateTime? @db.DateTime(0)
+  update_time  DateTime? @db.DateTime(0)
+  link         String?   @db.VarChar(2550)
+  title        String?   @db.VarChar(255)
+  thumbnail    String?   @db.VarChar(255)
+}
+
+model okr_model_kr {
+  id               BigInt    @id
+  objective_id     BigInt?
+  kr_name          String?   @db.VarChar(255)
+  principal        String?   @db.VarChar(255)
+  member_ids       String?   @db.VarChar(255)
+  description      String?   @db.VarChar(255)
+  weight_index     Int?      @default(0)
+  finish_index     Int?      @default(0)
+  grade            String?   @default("0.00") @db.VarChar(32)
+  confidence_index Int?      @default(0)
+  creator          String?   @db.VarChar(255)
+  create_time      DateTime? @db.DateTime(0)
+  modify_time      DateTime? @db.DateTime(0)
+  delete_flg       Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+}
+
+model okr_model_objective {
+  id                BigInt    @id
+  objective_name    String?   @db.VarChar(255)
+  description       String?   @db.VarChar(255)
+  industry          BigInt?
+  department        BigInt?
+  duty              BigInt?
+  type              BigInt?
+  principal         String?   @db.VarChar(255)
+  member_ids        String?   @db.VarChar(2550)
+  period            String?   @db.VarChar(255)
+  begin_time        DateTime? @db.DateTime(0)
+  end_time          DateTime? @db.DateTime(0)
+  parent_type       Int?
+  parent_id         BigInt?
+  benchmark_id      BigInt?
+  award_type        Int       @default(0)
+  award_description String?   @db.VarChar(255)
+  award_standard    String?   @db.VarChar(255)
+  payment           Int?
+  price             Float?
+  status            Int?      @default(0)
+  creator           String?   @db.VarChar(255)
+  create_time       DateTime? @db.DateTime(0)
+  modify_time       DateTime? @db.DateTime(0)
+  delete_flg        Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  likes             Int?      @default(0)
+  copies            Int?      @default(0)
+  watches           Int?      @default(0)
+}
+
+model okr_msg {
+  id          BigInt    @id
+  uid         String?   @db.VarChar(255)
+  msg         String?   @db.VarChar(255)
+  status      Int?
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  type        Int?
+}
+
+model okr_objective {
+  id                BigInt    @id
+  parent_type       Int?
+  parent_id         BigInt?
+  project_id        BigInt?
+  objective_name    String?   @db.VarChar(255)
+  description       String?   @db.VarChar(255)
+  objective_type    BigInt?
+  visible_range     Int?
+  principal         String?   @db.VarChar(255)
+  member_ids        String?   @db.VarChar(2550)
+  group_id          String?   @db.VarChar(255)
+  group_acc_id      String?   @db.VarChar(255)
+  period            String?   @db.VarChar(255)
+  begin_time        DateTime? @db.DateTime(0)
+  end_time          DateTime? @db.DateTime(0)
+  sort              Int?
+  status            Int?      @default(0)
+  creator           String?   @db.VarChar(255)
+  delete_flg        Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time       DateTime? @db.DateTime(0)
+  modify_time       DateTime? @db.DateTime(0)
+  award_type        Int       @default(0)
+  award_description String?   @db.VarChar(255)
+  award_standard    String?   @db.VarChar(255)
+  is_apply          Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  confidence_index  Int?      @default(0)
+  finish_index      Int?      @default(0)
+  grade             Decimal?  @default(0.00) @db.Decimal(3, 2)
+  kr_count          Int?      @default(0)
+  task_count        Int?      @default(0)
+  is_verify         Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  benchmark_id      BigInt?
+}
+
+model okr_operate_log {
+  id           BigInt    @id
+  module_id    String?   @db.VarChar(255)
+  type         Int?
+  uid          String?   @db.VarChar(255)
+  operate_user String?   @db.VarChar(255)
+  operate      String?   @db.VarChar(255)
+  operate_time DateTime? @db.DateTime(0)
+}
+
+model okr_project {
+  id           BigInt    @id
+  project_name String?   @db.VarChar(255)
+  description  String?   @db.VarChar(255)
+  delete_flg   Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  principal    String?   @db.VarChar(2550)
+  creator      String?   @db.VarChar(255)
+  create_time  DateTime? @db.DateTime(0)
+  modify_time  DateTime? @db.DateTime(0)
+}
+
+model okr_reply {
+  id           BigInt    @id
+  comment_id   String    @db.VarChar(255)
+  type         Int?
+  from_user_id String?   @db.VarChar(255)
+  from_user    String?   @db.VarChar(255)
+  to_user_id   String?   @db.VarChar(255)
+  to_user      String?   @db.VarChar(255)
+  delete_flg   Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time  DateTime? @db.DateTime(0)
+  update_time  DateTime? @db.DateTime(0)
+  comment      String?   @db.VarChar(2550)
+  comment_type Int?
+  source_id    BigInt?
+  source_name  String?   @db.VarChar(255)
+  extension    String?   @db.VarChar(255)
+  size         BigInt?
+  links        String?   @db.LongText
+  likes        Int?      @default(0)
+}
+
+model okr_task {
+  id               BigInt    @id
+  project_id       BigInt?
+  objective_id     BigInt?
+  kr_id            BigInt?
+  task_name        String?   @db.VarChar(255)
+  description      String?   @db.VarChar(255)
+  principal        String?   @db.VarChar(255)
+  member_ids       String?   @db.VarChar(2550)
+  period           String?   @db.VarChar(255)
+  begin_time       DateTime? @db.DateTime(0)
+  end_time         DateTime? @db.DateTime(0)
+  attachment       String?   @db.VarChar(255)
+  confidence_index Int?      @default(0)
+  grade            Decimal?  @db.Decimal(3, 2)
+  finish_index     Int?      @default(0)
+  task_status      Int?      @default(0)
+  sort             Int?
+  creator          String?   @db.VarChar(255)
+  show_kanban      Boolean?  @db.Bit(1)
+  delete_flg       Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time      DateTime? @db.DateTime(0)
+  modify_time      DateTime? @db.DateTime(0)
+  is_apply         Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+}
+
+model okr_task_execute_log {
+  id               BigInt    @id
+  task_id          BigInt?
+  full_in_date     DateTime? @db.DateTime(0)
+  execute_content  String?   @db.VarChar(255)
+  executor         String?   @db.VarChar(255)
+  create_time      DateTime? @db.DateTime(0)
+  modify_time      DateTime? @db.DateTime(0)
+  confidence_index Int?
+  finish_index     Int?
+  risk             String?   @db.VarChar(255)
+  del_flg          Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+}
+
+model operate_log {
+  id           BigInt    @id
+  operate_user String?   @db.VarChar(255)
+  operate      String?   @db.VarChar(255)
+  queries      String?   @db.MediumText
+  operate_time DateTime? @db.DateTime(0)
+  uid          String?   @db.VarChar(255)
+  operate_type String?   @db.VarChar(255)
+
+  @@index([operate_time], map: "o_l_operate_time")
+  @@index([uid], map: "uid")
+}
+
+model personal_naotu {
+  id                    BigInt    @id @default(autoincrement())
+  name                  String?   @db.VarChar(50)
+  user_id               String?   @db.VarChar(50)
+  json                  String?   @db.LongText
+  links                 String?   @db.LongText
+  pictures              String?   @db.LongText
+  del_flag              Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  favorite_id           Int?
+  thumbnail             String?   @db.LongText
+  content               String?   @db.LongText
+  remarks               String?   @db.LongText
+  share_flag            Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  shared_user_id_list   String?   @db.LongText
+  share_time            DateTime? @db.DateTime(0)
+  create_time           DateTime? @db.DateTime(0)
+  update_time           DateTime? @db.DateTime(0)
+  closing_date          DateTime? @db.DateTime(0)
+  validity_type         Int?      @default(1)
+  dir_id                BigInt?
+  favorite_flag         Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  favorite_user_id_list String?   @db.LongText
+
+  @@index([user_id], map: "pnu")
+  @@index([user_id, del_flag], map: "pnud")
+  @@index([user_id, del_flag, update_time], map: "pnudu")
+  @@index([user_id, favorite_id], map: "pnuf")
+  @@index([update_time], map: "pnup")
+  @@index([user_id, update_time], map: "pnuu")
+}
+
+model report_apply {
+  id          BigInt    @id
+  uid         String?   @db.VarChar(255)
+  report_id   BigInt?
+  status      Int?
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  operator    String?   @db.VarChar(255)
+  company_id  String?   @db.VarChar(255)
+}
+
+model rong_cloud {
+  uid          String    @id @db.VarChar(255)
+  chat_token   String    @db.VarChar(255)
+  expired_time DateTime? @db.DateTime(0)
+}
+
+model sh_favorite {
+  id          BigInt    @id
+  theme_id    BigInt
+  user_id     String?   @db.VarChar(50)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+
+  @@index([user_id], map: "sfu")
+  @@index([user_id, del_flag], map: "sfud")
+}
+
+model sh_order {
+  id           BigInt    @id
+  product_id   BigInt?
+  user_id      String?   @db.VarChar(255)
+  payment      Decimal?  @db.Decimal(20, 2)
+  pay_platform Int?
+  status       Int?
+  payment_time DateTime? @db.DateTime(0)
+  end_time     DateTime? @db.DateTime(0)
+  close_time   DateTime? @db.DateTime(0)
+  create_time  DateTime? @db.DateTime(0)
+  update_time  DateTime? @db.DateTime(0)
+
+  @@index([create_time], map: "shordercreate")
+  @@index([status], map: "shorderstatus")
+  @@index([status, create_time], map: "shorderstatuscreate")
+  @@index([user_id], map: "shorderuserId")
+  @@index([user_id, create_time], map: "shorderuserIdcreate")
+}
+
+model sh_pay_info {
+  id              BigInt    @id
+  user_id         String?   @db.VarChar(200)
+  order_id        BigInt?
+  pay_platform    Int?
+  platform_number String?   @db.VarChar(200)
+  platform_status String?   @db.VarChar(200)
+  create_time     DateTime? @db.DateTime(0)
+  update_time     DateTime? @db.DateTime(0)
+}
+
+model sh_pay_query {
+  id               BigInt  @id
+  code             String? @db.VarChar(255)
+  msg              String? @db.VarChar(255)
+  sub_code         String? @db.VarChar(255)
+  sub_msg          String? @db.VarChar(255)
+  trade_no         String? @unique(map: "spqtradeno") @db.VarChar(255)
+  out_trade_no     String? @db.VarChar(255)
+  trade_status     String? @db.VarChar(255)
+  total_amount     String? @db.VarChar(255)
+  buyer_pay_amount String? @db.VarChar(255)
+  buyer_logon_id   String? @db.VarChar(255)
+  buyer_user_id    String? @db.VarChar(255)
+  invoice_amount   String? @db.VarChar(255)
+  point_amount     String? @db.VarChar(255)
+  receipt_amount   String? @db.VarChar(255)
+  send_pay_date    String? @db.VarChar(255)
+}
+
+model sh_product {
+  id          BigInt    @id
+  price       Decimal?  @db.Decimal(10, 2)
+  point       Int?
+  recommend   Boolean?  @db.Bit(1)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model sh_reward {
+  id          BigInt    @id
+  name        String?   @db.VarChar(255)
+  user_id     String?   @db.VarChar(255)
+  reward      Int?
+  tag         String?   @db.VarChar(255)
+  content     String?   @db.LongText
+  visits      Int?
+  status      Int?
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+
+  @@index([user_id], map: "sru")
+}
+
+model sh_reward_comment {
+  id          BigInt    @id
+  reward_id   BigInt?
+  user_id     String?   @db.VarChar(255)
+  content     String?   @db.LongText
+  point       Int?
+  adopt_flag  Boolean?  @db.Bit(1)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  target_id   BigInt?
+
+  @@index([del_flag], map: "srcdf")
+  @@index([reward_id], map: "srcri")
+  @@index([reward_id, del_flag], map: "srcridf")
+  @@index([user_id], map: "srcu")
+  @@index([user_id, del_flag], map: "srcud")
+}
+
+model sh_reward_reply {
+  id          BigInt    @id
+  comment_id  BigInt?
+  reply_id    BigInt?
+  reply_type  Int?
+  content     String?   @db.Text
+  from_userId String?   @db.VarChar(255)
+  to_userId   String?   @db.VarChar(255)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+
+  @@index([comment_id], map: "srrci")
+}
+
+model sh_tags {
+  id          Int     @id
+  code        String? @db.VarChar(255)
+  value       String? @db.VarChar(255)
+  parent_code String? @db.VarChar(255)
+}
+
+model sh_theme {
+  id          BigInt    @id
+  name        String?   @db.VarChar(255)
+  content     String?   @db.Text
+  tag         String?   @db.VarChar(255)
+  target_id   BigInt?
+  target_type Int?
+  user_id     String?   @db.VarChar(255)
+  visits      Int?
+  thumbnail   String?   @db.LongText
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+
+  @@index([user_id, create_time], map: "shthemeuserIdcreate")
+}
+
+model sh_theme_comment {
+  id          BigInt    @id
+  theme_id    BigInt?
+  content     String?   @db.Text
+  from_userId String?   @db.VarChar(255)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+
+  @@index([theme_id], map: "sccid")
+  @@index([theme_id, del_flag], map: "scciddf")
+  @@index([create_time], map: "scct")
+  @@index([theme_id, del_flag, create_time], map: "sssssssss")
+}
+
+model sh_theme_comment_star {
+  id          BigInt    @id
+  target_id   BigInt?
+  user_id     String?   @db.VarChar(255)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+
+  @@index([target_id, del_flag], map: "stcstd")
+  @@index([target_id, user_id], map: "stcstu")
+}
+
+model sh_theme_reply {
+  id          BigInt    @id
+  comment_id  BigInt?
+  reply_id    BigInt?
+  reply_type  Int?
+  content     String?   @db.Text
+  from_userId String?   @db.VarChar(255)
+  to_userId   String?   @db.VarChar(255)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+
+  @@index([comment_id], map: "strci")
+  @@index([comment_id, del_flag], map: "strcidf")
+}
+
+model sh_theme_reply_star {
+  id          BigInt    @id
+  target_id   BigInt?
+  user_id     String?   @db.VarChar(255)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+
+  @@index([target_id, del_flag], map: "strstd")
+  @@index([target_id, user_id], map: "strstu")
+}
+
+model sh_theme_star {
+  id          BigInt    @id
+  target_id   BigInt?
+  user_id     String?   @db.VarChar(255)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+}
+
+model share_naotu {
+  id             BigInt    @id
+  naotu_id       BigInt?
+  from_user_id   String?   @db.VarChar(40)
+  from_user_name String?   @db.VarChar(40)
+  to_user_id     String?   @db.VarChar(40)
+  create_time    DateTime? @db.DateTime(0)
+}
+
+model suggestions {
+  id          BigInt    @id
+  content     String?   @db.LongText
+  uid         String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+}
+
+model sys_all_navi {
+  id          BigInt    @id @default(autoincrement())
+  sys_id      BigInt?
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  type        Int?
+  icon        String?   @db.VarChar(255)
+  jump        String?   @db.VarChar(255)
+  permission  String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model sys_base_data {
+  id             BigInt    @id
+  sys_id         BigInt?
+  data_name      String?   @db.VarChar(255)
+  table_name     String?   @db.VarChar(255)
+  description    String?   @db.VarChar(255)
+  table_key      String?   @db.VarChar(255)
+  status         Boolean?  @db.Bit(1)
+  delete_flg     Boolean?  @db.Bit(1)
+  create_time    DateTime? @db.DateTime(0)
+  update_time    DateTime? @db.DateTime(0)
+  choose_columns String?   @db.VarChar(2550)
+}
+
+model sys_bug {
+  id      Int       @id
+  type    String?   @db.VarChar(255)
+  content String?   @db.VarChar(255)
+  user    String?   @db.VarChar(255)
+  image   String?   @db.LongText
+  url     String?   @db.VarChar(255)
+  date    DateTime? @db.DateTime(0)
+  state   String?   @db.VarChar(255)
+  picuser String?   @db.VarChar(255)
+  picdate DateTime? @db.DateTime(0)
+}
+
+model sys_config {
+  id    BigInt  @id
+  key   String? @db.VarChar(255)
+  value String? @db.VarChar(255)
+  type  Int?
+}
+
+model sys_data_sharing {
+  id          BigInt    @id
+  code        String?   @db.VarChar(255)
+  name        String?   @db.VarChar(255)
+  sys_id      BigInt?
+  uid         String?   @db.VarChar(32)
+  username    String?   @db.VarChar(255)
+  scope       String?   @db.VarChar(255)
+  scope_type  Int?
+  source      String?   @db.VarChar(255)
+  begin_time  DateTime? @db.DateTime(0)
+  end_time    DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  permission  Int?
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model sys_dept {
+  id          String    @id @db.VarChar(255)
+  name        String?   @db.VarChar(255)
+  leader_uid  String?   @db.VarChar(255)
+  parent_id   String?   @db.VarChar(255)
+  company     String?   @db.VarChar(255)
+  dept_detail String?   @db.VarChar(255)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  description String?   @db.VarChar(255)
+  status      Boolean?  @db.Bit(1)
+  sort        Int?
+  creator_id  String?   @db.VarChar(255)
+}
+
+model sys_dic {
+  id          BigInt    @id
+  type_id     BigInt?
+  value       String?   @db.VarChar(255)
+  num_flg     Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  del_flg     Boolean?  @default(dbgenerated("b'0'")) @db.Bit(1)
+}
+
+model sys_dic_type {
+  id          BigInt    @id
+  type        String?   @db.VarChar(255)
+  delete_flg  Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model sys_log {
+  id          BigInt    @id @default(autoincrement())
+  username    String?   @db.VarChar(50)
+  operation   String?   @db.VarChar(50)
+  method      String?   @db.VarChar(200)
+  params      String?   @db.VarChar(5000)
+  time        BigInt?
+  ip          String?   @db.VarChar(64)
+  create_time DateTime? @db.DateTime(0)
+  uid         String?   @db.VarChar(50)
+  system_id   BigInt?
+  opt_module  String?   @db.VarChar(255)
+  result      Boolean?  @db.Bit(1)
+
+  @@index([create_time], map: "create_time")
+  @@index([system_id], map: "system_id")
+  @@index([create_time, system_id], map: "systemidcreatetime")
+}
+
+model sys_maintain {
+  id          BigInt    @id
+  code        String?   @db.VarChar(255)
+  name        String?   @db.VarChar(255)
+  for_short   String?   @db.VarChar(255)
+  url         String?   @db.VarChar(255)
+  app_key     String?   @db.VarChar(255)
+  logo        String?   @db.VarChar(255)
+  out_path    String?   @db.VarChar(255)
+  status      Boolean?  @db.Bit(1)
+  description String?   @db.VarChar(255)
+  delete_flg  Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model sys_perm {
+  id         Int     @id @default(autoincrement())
+  name       String? @db.VarChar(255)
+  type       Int?
+  value      String? @db.VarChar(255)
+  group_type Int?
+}
+
+model sys_relation_cockpit_user_company_report {
+  id          BigInt    @id
+  uid         String?   @db.VarChar(255)
+  company_id  String?   @db.VarChar(255)
+  report_id   BigInt?
+  sort        Int?
+  desc        String?   @db.LongText
+  create_time DateTime? @db.DateTime(0)
+}
+
+model sys_relation_dept_report {
+  id           BigInt  @id
+  dept_id      String? @db.VarChar(255)
+  reports      String? @db.LongText
+  show_reports String? @db.LongText
+}
+
+model sys_relation_role_perm {
+  id            BigInt  @id
+  uid           String? @db.VarChar(255)
+  role_id       BigInt?
+  type          Int
+  perm_ids      String? @db.Text
+  show_perm_ids String? @db.Text
+  perm_value    String? @db.Text
+}
+
+model sys_relation_user_company_dept {
+  id         BigInt  @id
+  uid        String? @db.VarChar(255)
+  company_id String? @db.VarChar(255)
+  dept_id    String? @db.VarChar(255)
+}
+
+model sys_relation_user_company_report {
+  id         BigInt  @id
+  uid        String? @db.VarChar(255)
+  company_id String? @db.VarChar(255)
+  reports    String? @db.LongText
+}
+
+model sys_relation_user_company_role {
+  id         BigInt  @id
+  role_id    BigInt?
+  company_id String? @db.VarChar(255)
+  uid        String? @db.VarChar(255)
+}
+
+model sys_report {
+  id          BigInt    @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
+  index       String?   @db.VarChar(255)
+  icon        String?   @db.VarChar(255)
+  parent_id   BigInt?
+  m_order     Int       @default(0)
+  delete_flg  Boolean   @default(dbgenerated("b'0'")) @db.Bit(1)
+  description String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  status      Boolean?  @db.Bit(1)
+  update_time DateTime? @db.DateTime(0)
+  preview     String?   @db.VarChar(255)
+}
+
+model sys_report_param {
+  id        BigInt  @id
+  name      String? @db.VarChar(255)
+  param     String? @db.VarChar(255)
+  remarks   String? @db.VarChar(255)
+  report_id BigInt?
+}
+
+model sys_report_param_user {
+  id        BigInt  @id
+  user_id   String? @db.VarChar(255)
+  report_id BigInt?
+  value     String? @db.VarChar(1024)
+}
+
+model sys_share {
+  id         BigInt    @id
+  pw         String?   @db.VarChar(255)
+  type       Int?
+  target_id  BigInt?
+  share_time DateTime? @db.DateTime(0)
+  share_uid  String?   @db.VarChar(255)
+  status     Int?
+}
+
+model sys_sql_conf {
+  id          BigInt    @id
+  sys_id      BigInt?
+  name        String?   @db.VarChar(255)
+  sqls        String?   @db.VarChar(255)
+  status      Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  delete_flg  Boolean?  @db.Bit(1)
+}
+
+model sys_sys_conf {
+  id          BigInt    @id
+  sys_id      BigInt?
+  name        String?   @db.VarChar(255)
+  rules       String?   @db.VarChar(255)
+  status      Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  delete_flg  Boolean?  @db.Bit(1)
+}
+
+model sys_user_profile {
+  uid         String    @id @db.VarChar(255)
+  birthday    DateTime? @db.DateTime(0)
+  address     String?   @db.VarChar(255)
+  sex         String?   @db.Char(10)
+  qq          String?   @db.VarChar(255)
+  avatar      String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+  cy_name     String?   @db.VarChar(255)
+  job         String?   @db.VarChar(255)
+}
+
+model sys_user_sh_info {
+  id       BigInt  @id
+  uid      String? @db.VarChar(40)
+  point    Int?
+  cy_name  String? @default("") @db.VarChar(40)
+  cy_trade String? @default("") @db.VarChar(40)
+  cy_size  String? @default("") @db.VarChar(40)
+  province String? @default("") @db.VarChar(40)
+  city     String? @default("") @db.VarChar(40)
+  job      String? @default("") @db.VarChar(255)
+
+  @@index([uid], map: "susiuid")
+}
+
+model sys_user_work_history {
+  id          BigInt    @id
+  uid         String?   @db.VarChar(40)
+  cy_name     String?   @db.VarChar(255)
+  job         String?   @db.VarChar(255)
+  detail      String?   @db.LongText
+  start_time  DateTime? @db.DateTime(0)
+  end_time    DateTime? @db.DateTime(0)
+  now_flag    Boolean?  @db.Bit(1)
+  del_flag    Boolean?  @db.Bit(1)
+  create_time DateTime? @db.DateTime(0)
+  update_time DateTime? @db.DateTime(0)
+}
+
+model third_party_account {
+  id              String  @id @db.VarChar(50)
+  access_token    String? @db.VarChar(255)
+  account_type    Int?
+  head_icon_big   String? @db.VarChar(255)
+  head_icon_hd    String? @db.VarChar(255)
+  head_icon_mid   String? @db.VarChar(255)
+  head_icon_small String? @db.VarChar(255)
+  open_id         String? @db.VarChar(255)
+  uid             String? @db.VarChar(36)
+}
+
+model user_attachment {
+  id          BigInt    @id
+  uid         String?   @db.VarChar(255)
+  source_type Int?
+  source_id   String?   @db.VarChar(255)
+  source_name String?   @db.VarChar(255)
+  url         String?   @db.VarChar(255)
+  object_name String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  delete_flg  Boolean?  @db.Bit(1)
+  size        BigInt?
+  extension   String?   @db.VarChar(255)
+}
+
+model sys_flow {
+  id     Int     @id @default(autoincrement())
+  json   String? @db.Text
+  mobile String? @db.VarChar(20)
+}
